@@ -128,20 +128,6 @@ Panel {
                             onClicked: tabView.currentTab = "done"
                         }
                     }
-                    
-                    Text {
-                        text: tabView.currentTab === "archived" ? "[archive]" : "archive"
-                        color: root.barForeground
-                        opacity: tabView.currentTab === "archived" ? 1.0 : 0.5
-                        font.family: "monospace"
-                        font.pixelSize: Style.font.body
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: tabView.currentTab = "archived"
-                        }
-                    }
                 }
                 
                 Item { height: Style.space(4); width: 1 }
@@ -249,69 +235,9 @@ Panel {
                                 }
                                 
                                 Text {
-                                    text: "[>>]"
-                                    color: root.barForeground
-                                    opacity: archiveArea.containsMouse ? 1.0 : 0.4
-                                    font.family: "monospace"
-                                    font.pixelSize: Style.font.body
-                                    
-                                    MouseArea {
-                                        id: archiveArea
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            if (root.hostWidget && root.hostWidget.storage) {
-                                                root.hostWidget.storage.archiveReminder(modelData.id)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Archived reminders
-                    ListView {
-                        visible: tabView.currentTab === "archived"
-                        anchors.fill: parent
-                        spacing: 0
-                        clip: true
-                        
-                        model: root.hostWidget ? root.hostWidget.archivedReminders : []
-                        
-                        delegate: Item {
-                            width: ListView.view.width
-                            height: reminderText.height + Style.space(4)
-                            
-                            Row {
-                                width: parent.width
-                                spacing: Style.space(8)
-                                
-                                Text {
-                                    text: "~"
-                                    color: root.barForeground
-                                    opacity: 0.3
-                                    font.family: "monospace"
-                                    font.pixelSize: Style.font.body
-                                }
-                                
-                                Text {
-                                    id: reminderText
-                                    text: modelData.text
-                                    color: root.barForeground
-                                    opacity: 0.3
-                                    font.family: "monospace"
-                                    font.pixelSize: Style.font.body
-                                    font.strikeout: true
-                                    width: parent.width - 90
-                                    wrapMode: Text.WordWrap
-                                }
-                                
-                                Text {
                                     text: "[del]"
                                     color: root.barForeground
-                                    opacity: deleteArea.containsMouse ? 1.0 : 0.3
+                                    opacity: deleteArea.containsMouse ? 1.0 : 0.4
                                     font.family: "monospace"
                                     font.pixelSize: Style.font.body
                                     

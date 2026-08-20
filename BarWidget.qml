@@ -10,7 +10,6 @@ BarWidget {
     
     property var activeReminders: []
     property var doneReminders: []
-    property var archivedReminders: []
     
     implicitWidth: reminderText.width + 8
     implicitHeight: reminderText.height
@@ -43,9 +42,11 @@ BarWidget {
     Text {
         id: reminderText
         text: root.activeReminders.length > 0 
-            ? "📝 " + root.activeReminders.length
-            : "📝"
-        color: root.activeReminders.length > 0 ? "#ff79c6" : "#f8f8f2"
+            ? root.activeReminders[0].text
+            : "no reminders"
+        color: root.activeReminders.length > 0 ? root.barForeground : root.barForeground
+        opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
+        font.family: "monospace"
         font.pixelSize: 14
         
         MouseArea {
@@ -79,13 +80,10 @@ BarWidget {
         function updateFilteredLists() {
             var active = []
             var done = []
-            var archived = []
             
             for (var i = 0; i < reminders.length; i++) {
                 var reminder = reminders[i]
-                if (reminder.archived) {
-                    archived.push(reminder)
-                } else if (reminder.done) {
+                if (reminder.done) {
                     done.push(reminder)
                 } else {
                     active.push(reminder)
@@ -94,7 +92,6 @@ BarWidget {
             
             root.activeReminders = active
             root.doneReminders = done
-            root.archivedReminders = archived
         }
         
         function addReminder(text) {
