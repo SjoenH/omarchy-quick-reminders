@@ -44,10 +44,9 @@ BarWidget {
         
         Text {
             text: "·"
-            color: root.barForeground
+            color: root.barForeground || "#f8f8f2"
             font.family: "monospace"
             font.pixelSize: 14
-            anchors.verticalCenter: parent.verticalCenter
         }
         
         Text {
@@ -55,11 +54,10 @@ BarWidget {
             text: root.activeReminders.length > 0 
                 ? root.activeReminders[0].text
                 : "no reminders"
-            color: root.activeReminders.length > 0 ? root.barForeground : root.barForeground
+            color: root.barForeground || "#f8f8f2"
             opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
             font.family: "monospace"
             font.pixelSize: 14
-            anchors.verticalCenter: parent.verticalCenter
         }
         
         MouseArea {
@@ -189,14 +187,12 @@ BarWidget {
                     storage.reminders = []
                     root.activeReminders = []
                     root.doneReminders = []
-                    root.archivedReminders = []
                 }
             } else {
                 // File doesn't exist yet, initialize empty
                 storage.reminders = []
                 root.activeReminders = []
                 root.doneReminders = []
-                root.archivedReminders = []
             }
         }
     }
