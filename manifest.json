@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "no.koka.quick-reminders",
+  "name": "Quick Reminders",
+  "version": "1.0.0",
+  "author": "koka.no",
+  "license": "MIT",
+  "description": "Simple reminder app to quickly jot down tasks. Mark as done, archive, and delete to keep momentum going.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Quick Reminders",
+    "category": "Productivity",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
