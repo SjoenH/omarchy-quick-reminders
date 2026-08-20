@@ -14,6 +14,9 @@ Panel {
     
     function open() {
         root.controller.show()
+        Qt.callLater(function() {
+            reminderInput.forceActiveFocus()
+        })
     }
     
     function close() {
@@ -77,9 +80,10 @@ Panel {
                         }
                         
                         Keys.onReturnPressed: {
-                            if (root.hostWidget && root.hostWidget.storage) {
+                            if (reminderInput.text.trim() !== "" && root.hostWidget && root.hostWidget.storage) {
                                 root.hostWidget.storage.addReminder(reminderInput.text)
                                 reminderInput.text = ""
+                                reminderInput.forceActiveFocus()
                             }
                         }
                     }
