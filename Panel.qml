@@ -35,7 +35,7 @@ Panel {
         owner: root.hostWidget || root
         bar: root.bar
         open: root.opened
-        focusTarget: keyCatcher
+        focusTarget: reminderInput
         contentWidth: panel.fittedContentWidth(Style.space(400))
         contentHeight: panel.fittedContentHeight(content.implicitHeight)
         
@@ -85,6 +85,10 @@ Panel {
                                 reminderInput.text = ""
                                 reminderInput.forceActiveFocus()
                             }
+                        }
+                        
+                        Keys.onEscapePressed: {
+                            root.close()
                         }
                     }
                 }
