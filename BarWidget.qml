@@ -39,15 +39,28 @@ BarWidget {
     
     onBarChanged: injectPanel()
     
-    Text {
-        id: reminderText
-        text: root.activeReminders.length > 0 
-            ? root.activeReminders[0].text
-            : "no reminders"
-        color: root.activeReminders.length > 0 ? root.barForeground : root.barForeground
-        opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
-        font.family: "monospace"
-        font.pixelSize: 14
+    Row {
+        spacing: 4
+        
+        Text {
+            text: "·"
+            color: root.barForeground
+            font.family: "monospace"
+            font.pixelSize: 14
+            anchors.verticalCenter: parent.verticalCenter
+        }
+        
+        Text {
+            id: reminderText
+            text: root.activeReminders.length > 0 
+                ? root.activeReminders[0].text
+                : "no reminders"
+            color: root.activeReminders.length > 0 ? root.barForeground : root.barForeground
+            opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
+            font.family: "monospace"
+            font.pixelSize: 14
+            anchors.verticalCenter: parent.verticalCenter
+        }
         
         MouseArea {
             anchors.fill: parent
