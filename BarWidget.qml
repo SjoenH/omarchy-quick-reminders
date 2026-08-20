@@ -11,8 +11,8 @@ BarWidget {
     property var activeReminders: []
     property var doneReminders: []
     
-    implicitWidth: reminderText.width + 8
-    implicitHeight: reminderText.height
+    implicitWidth: contentRow.width + 8
+    implicitHeight: contentRow.height
     
     readonly property bool opened: panelLoader.item
         ? panelLoader.item.opened === true
@@ -39,31 +39,32 @@ BarWidget {
     
     onBarChanged: injectPanel()
     
-    Row {
-        spacing: 4
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        onClicked: root.toggle()
         
-        Text {
-            text: "·"
-            color: root.barForeground || "#f8f8f2"
-            font.family: "monospace"
-            font.pixelSize: 14
-        }
-        
-        Text {
-            id: reminderText
-            text: root.activeReminders.length > 0 
-                ? root.activeReminders[0].text
-                : "no reminders"
-            color: root.barForeground || "#f8f8f2"
-            opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
-            font.family: "monospace"
-            font.pixelSize: 14
-        }
-        
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.toggle()
+        Row {
+            id: contentRow
+            spacing: 4
+            
+            Text {
+                text: "·"
+                color: root.barForeground || "#f8f8f2"
+                font.family: "monospace"
+                font.pixelSize: 14
+            }
+            
+            Text {
+                id: reminderText
+                text: root.activeReminders.length > 0 
+                    ? root.activeReminders[0].text
+                    : "no reminders"
+                color: root.barForeground || "#f8f8f2"
+                opacity: root.activeReminders.length > 0 ? 1.0 : 0.5
+                font.family: "monospace"
+                font.pixelSize: 14
+            }
         }
     }
     
