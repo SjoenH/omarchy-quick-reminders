@@ -69,6 +69,16 @@ Panel {
                         color: root.barForeground
                         font.family: "monospace"
                         font.pixelSize: Style.font.body
+                        focus: true
+                        
+                        onAccepted: {
+                            console.log("Quick Reminders: onAccepted, text:", reminderInput.text)
+                            if (reminderInput.text.trim() !== "" && root.hostWidget && root.hostWidget.storage) {
+                                console.log("Quick Reminders: Adding reminder via onAccepted")
+                                root.hostWidget.storage.addReminder(reminderInput.text)
+                                reminderInput.text = ""
+                            }
+                        }
                         
                         Text {
                             visible: !reminderInput.text && !reminderInput.focus
@@ -80,7 +90,9 @@ Panel {
                         }
                         
                         Keys.onReturnPressed: {
+                            console.log("Quick Reminders: Return pressed, text:", reminderInput.text)
                             if (reminderInput.text.trim() !== "" && root.hostWidget && root.hostWidget.storage) {
+                                console.log("Quick Reminders: Adding reminder")
                                 root.hostWidget.storage.addReminder(reminderInput.text)
                                 reminderInput.text = ""
                                 reminderInput.forceActiveFocus()
@@ -88,7 +100,12 @@ Panel {
                         }
                         
                         Keys.onEscapePressed: {
+                            console.log("Quick Reminders: Escape pressed")
                             root.close()
+                        }
+                        
+                        Keys.onPressed: function(event) {
+                            console.log("Quick Reminders: Key pressed:", event.key)
                         }
                     }
                 }
