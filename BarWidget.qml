@@ -11,6 +11,22 @@ BarWidget {
     property var activeReminders: []
     property var doneReminders: []
     
+    // Expose storage functions directly on root
+    function addReminder(text) {
+        console.log("Quick Reminders: root.addReminder called with:", text)
+        storage.addReminder(text)
+    }
+    
+    function markDone(id) {
+        console.log("Quick Reminders: root.markDone called with:", id)
+        storage.markDone(id)
+    }
+    
+    function deleteReminder(id) {
+        console.log("Quick Reminders: root.deleteReminder called with:", id)
+        storage.deleteReminder(id)
+    }
+    
     implicitWidth: contentRow.width + 8
     implicitHeight: contentRow.height
     
@@ -107,6 +123,7 @@ BarWidget {
         }
         
         function addReminder(text) {
+            console.log("Quick Reminders: storage.addReminder called with:", text)
             if (text.trim() === "") return
             
             var reminder = {
@@ -117,8 +134,12 @@ BarWidget {
                 archived: false
             }
             
+            console.log("Quick Reminders: Created reminder:", JSON.stringify(reminder))
             storage.reminders.push(reminder)
+            console.log("Quick Reminders: Reminders array now has", storage.reminders.length, "items")
+            storage.updateFilteredLists()  // Update UI immediately
             storage.saveData()
+            console.log("Quick Reminders: saveData() called")
         }
         
         function markDone(id) {
@@ -128,6 +149,7 @@ BarWidget {
                     break
                 }
             }
+            storage.updateFilteredLists()  // Update UI immediately
             storage.saveData()
         }
         
@@ -149,6 +171,7 @@ BarWidget {
                 }
             }
             storage.reminders = newReminders
+            storage.updateFilteredLists()  // Update UI immediately
             storage.saveData()
         }
     }

@@ -73,9 +73,9 @@ Panel {
                         
                         onAccepted: {
                             console.log("Quick Reminders: onAccepted, text:", reminderInput.text)
-                            if (reminderInput.text.trim() !== "" && root.hostWidget && root.hostWidget.storage) {
+                            if (reminderInput.text.trim() !== "" && root.hostWidget) {
                                 console.log("Quick Reminders: Adding reminder via onAccepted")
-                                root.hostWidget.storage.addReminder(reminderInput.text)
+                                root.hostWidget.addReminder(reminderInput.text)
                                 reminderInput.text = ""
                             }
                         }
@@ -91,11 +91,14 @@ Panel {
                         
                         Keys.onReturnPressed: {
                             console.log("Quick Reminders: Return pressed, text:", reminderInput.text)
-                            if (reminderInput.text.trim() !== "" && root.hostWidget && root.hostWidget.storage) {
+                            console.log("Quick Reminders: hostWidget:", root.hostWidget)
+                            if (reminderInput.text.trim() !== "" && root.hostWidget) {
                                 console.log("Quick Reminders: Adding reminder")
-                                root.hostWidget.storage.addReminder(reminderInput.text)
+                                root.hostWidget.addReminder(reminderInput.text)
                                 reminderInput.text = ""
                                 reminderInput.forceActiveFocus()
+                            } else {
+                                console.log("Quick Reminders: Failed condition - text empty or no hostWidget")
                             }
                         }
                         
@@ -212,8 +215,8 @@ Panel {
                                         hoverEnabled: true
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
-                                            if (root.hostWidget && root.hostWidget.storage) {
-                                                root.hostWidget.storage.markDone(modelData.id)
+                                            if (root.hostWidget) {
+                                                root.hostWidget.markDone(modelData.id)
                                             }
                                         }
                                     }
@@ -272,8 +275,8 @@ Panel {
                                         hoverEnabled: true
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: {
-                                            if (root.hostWidget && root.hostWidget.storage) {
-                                                root.hostWidget.storage.deleteReminder(modelData.id)
+                                            if (root.hostWidget) {
+                                                root.hostWidget.deleteReminder(modelData.id)
                                             }
                                         }
                                     }
